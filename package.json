@@ -1,0 +1,57 @@
+{
+  "name": "unruley",
+  "displayName": "unruley",
+  "description": "Visualize unruley ruler offenses with ease.",
+  "version": "0.0.1",
+  "publisher": "brennacodes",
+  "engines": {
+    "vscode": "^1.89.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "main": "./extension.js",
+  "activationEvents": [
+    "*"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "unruley.changeBackgroundColor",
+        "title": "Change Background Color Beyond Ruler"
+      }
+    ],
+    "configuration": {
+      "properties": {
+        "unruley.backgroundColor": {
+          "type": "string",
+          "default": "#ff0000",
+          "description": "The background color to apply"
+        },
+        "unruley.maxLineLength": {
+          "type": "number",
+          "default": 80,
+          "description": "The maximum line length"
+        },
+        "unruley.backgroundColorOpacity": {
+          "type": "number",
+          "default": 0.1,
+          "description": "The opacity to apply to the background color"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "node ./node_modules/vscode/bin/install"
+  },
+  "devDependencies": {
+    "@types/vscode": "^1.89.0",
+    "@types/mocha": "^10.0.6",
+    "@types/node": "18.x",
+    "eslint": "^8.57.0",
+    "typescript": "^5.4.5",
+    "@vscode/test-cli": "^0.0.9",
+    "@vscode/test-electron": "^2.3.9"
+  }
+}
