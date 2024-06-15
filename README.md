@@ -1,65 +1,57 @@
-# unruley README
+# Unruley VSCode Extension
 
-This is the README for your extension "unruley". After writing up a brief description, we recommend including the following sections.
+Unruley is a Visual Studio Code extension that allows you to easily see where lines are exceeding a given maximum line length.
 
 ## Features
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+- Set a custom color.
+- Set a custom opacity, or use the default of 0.1.
+- Define a maximum line length for your code (or use one that's already been set).
 
-For example if there is an image subfolder under your extension project workspace:
+The background color is automatically applied to lines that exceed the maximum line length, providing a helpful visual cue.
 
-\!\[feature X\]\(images/feature-x.png\)
+<figure>
+  <img src="./images/settings.png" alt="Unruley Settings Page" style="width:100%">
+  <figcaption align = "center"><b>Unruley Settings</b></figcaption>
+</figure>
+<figure>
+  <img src="./images/editor.png" alt="Unruley In Action" style="width:100%">
+  <figcaption align = "center"><b>Unruley In Action</b></figcaption>
+</figure>
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
 
-## Requirements
+## Usage
 
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
+1. Install the extension.
+2. Open the settings:
+  - File > Preferences > Settings
+  _or_
+  - Mac: <kbd>⌘</kbd> + <kbd>⇧</kbd> + <kbd>P</kbd> (Command + Shift + P)
+  - Windows: <kbd>^</kbd> + <kbd>⇧</kbd> + <kbd>P</kbd> (Ctrl + Shift + P)
+3. Search for <kbd>Unruley</kbd>.
+4. Set your preferred background color. [Click here to use Google's color picker](https://g.co/kgs/qeFDYUT). You can use hex (e.g., `#RRGGBB` or `#RGB`) or rgb (e.g., `rgb(255, 0, 0)`) color formats.
+5. Set the background color opacity.
+6. Set the maximum line length.
 
-## Extension Settings
+## Commands
 
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
+- `unruley.changeBackgroundColor`: Apply the background color and maximum line length settings to the active editor.
 
-For example:
+## Configuration
 
-This extension contributes the following settings:
+- `unruley.backgroundColor`: Set the background color. Accepts hex (e.g., `#RRGGBB` or `#RGB`) or rgb (e.g., `rgb(255, 0, 0)`) color formats. Default is `#ff0000`.
+- `unruley.maxLineLength`: Set the maximum line length. Default is `80`.
+- `unruley.backgroundColorOpacity`: Set the opacity of the background color. Accepts a number between `0` (completely transparent) and `1` (completely opaque). Default is `0.1`.
 
-* `myExtension.enable`: Enable/disable this extension.
-* `myExtension.thing`: Set to `blah` to do something.
+## Support
 
-## Known Issues
+Questions? Comments? Concerns? Ideas? Visit the [Unruley discussions board](https://github.com/brennacodes/unruley/discussions).
 
-Calling out known issues can help limit users opening duplicate issues against your extension.
 
-## Release Notes
+## Contributing
 
-Users appreciate release notes as you update your extension.
+Ready to dive in and contribute? Check out the [Contributing Guide](./CONTRIBUTING.md).
 
-### 1.0.0
+## License
 
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
----
-
-## Working with Markdown
-
-You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+Cmd+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux, macOS) to see a list of Markdown snippets
-
-## For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+[GPL v3.0](./LICENSE) © Brenna Stuart

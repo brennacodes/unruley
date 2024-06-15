@@ -1,20 +1,23 @@
 const vscode = require('vscode');
-
 let decorationType;
 
 function activate(context) {
     console.log('Righteous! You\'re officially "unruley"!');
 
-    let disposable = vscode.commands.registerCommand('unruley.changeBackgroundColor', async () => {
+    let disposable = vscode.commands.registerCommand('unruley.rulerColor', async () => {
         await updateSettings();
         applyDecorationsToActiveEditor();
     });
 
+    let disposableUnruleyCommand = vscode.commands.registerCommand('extension.unruleyCommand', async () => {
+        await vscode.commands.executeCommand('workbench.action.openSettings', 'unruley');
+    });
+
     context.subscriptions.push(disposable);
+    context.subscriptions.push(disposableUnruleyCommand);
 
     vscode.workspace.onDidChangeConfiguration(event => {
-        if (event.affectsConfiguration('unruley.backgroundColor') || event.affectsConfiguration('unruley.maxLineLength') || event.affectsConfiguration('unruley.backgroundColorOpacity')) {
-            console.log('Configuration changed');
+        if (event.affectsConfiguration('unruley.rulerColor') || event.affectsConfiguration('unruley.ruler') || event.affectsConfiguration('unruley.rulerColorOpacity')) {
             updateEditorRulers();
             applyDecorationsToActiveEditor();
         }
@@ -47,15 +50,15 @@ async function updateSettings() {
     const defaultMaxLineLength = 80;
     const defaultOpacity = 0.1;
 
-    const backgroundColor = config.get('backgroundColor', defaultBackgroundColor);
-    const maxLineLength = config.get('maxLineLength', defaultMaxLineLength);
-    const opacity = config.get('backgroundColorOpacity', defaultOpacity);
+    const backgroundColor = config.get('rulerColor', defaultBackgroundColor);
+    const maxLineLength = config.get('ruler', defaultMaxLineLength);
+    const opacity = config.get('rulerColorOpacity', defaultOpacity);
 
-    if (backgroundColor === defaultBackgroundColor && maxLineLength === defaultMaxLineLength && opacity === defaultOpacity) {
-        await config.update('backgroundColor', defaultBackgroundColor, vscode.ConfigurationTarget.Global);
-        await config.update('maxLineLength', defaultMaxLineLength, vscode.ConfigurationTarget.Global);
-        await config.update('backgroundColorOpacity', defaultOpacity, vscode.ConfigurationTarget.Global);
-        console.log('Default settings applied: backgroundColor, maxLineLength, and backgroundColorOpacity');
+    // Check if the values are undefined and apply defaults if necessary
+    if (!backgroundColor || !maxLineLength || !opacity) {
+        await config.update('rulerColor', defaultBackgroundColor, vscode.ConfigurationTarget.Global);
+        await config.update('ruler', defaultMaxLineLength, vscode.ConfigurationTarget.Global);
+        await config.update('rulerColorOpacity', defaultOpacity, vscode.ConfigurationTarget.Global);
     } else {
         console.log('Custom settings already exist');
     }
@@ -63,7 +66,7 @@ async function updateSettings() {
 
 async function updateEditorRulers() {
     const config = vscode.workspace.getConfiguration('unruley');
-    const maxLineLength = config.get('maxLineLength', 80);
+    const maxLineLength = config.get('ruler', 80);
 
     const editorConfig = vscode.workspace.getConfiguration('editor');
     let rulers = editorConfig.get('rulers', []);
@@ -72,20 +75,50 @@ async function updateEditorRulers() {
     rulers = [maxLineLength];
 
     await editorConfig.update('rulers', rulers, vscode.ConfigurationTarget.Global);
-    console.log(`Updated editor rulers to include max line length: ${maxLineLength}`);
 }
 
 function applyDecorationsToActiveEditor() {
     const editor = vscode.window.activeTextEditor;
     if (editor) {
-        applyDecorations(editor);
+        const ranges = computeRanges(editor);
+
+        const config = vscode.workspace.getConfiguration('unruley');
+        const backgroundColor = config.get('rulerColor', '#ff0000');
+        const opacity = config.get('rulerColorOpacity', 0.1);
+
+        if (!decorationType) {
+            decorationType = vscode.window.createTextEditorDecorationType({
+                backgroundColor: isHexColor(backgroundColor) ? hexToRgba(backgroundColor, opacity) : rgbToRgba(backgroundColor, opacity),
+                rangeBehavior: vscode.DecorationRangeBehavior.ClosedClosed
+            });
+        }
+
+        editor.setDecorations(decorationType, ranges);
     }
+}
+
+function computeRanges(editor) {
+    const maxLineLength = getEffectiveMaxLineLength();
+    const ranges = [];
+    for (let i = 0; i < editor.document.lineCount; i++) {
+        const line = editor.document.lineAt(i);
+        if (line.range.end.character < maxLineLength) {
+            const startPos = new vscode.Position(i, line.range.end.character);
+            const endPos = new vscode.Position(i, maxLineLength);
+            ranges.push(new vscode.Range(startPos, endPos));
+        } else {
+            const startPos = new vscode.Position(i, maxLineLength);
+            const endPos = new vscode.Position(i, line.range.end.character + 1); // Extend to ensure decoration applies to the end
+            ranges.push(new vscode.Range(startPos, endPos));
+        }
+    }
+    return ranges;
 }
 
 function applyDecorations(editor) {
     const config = vscode.workspace.getConfiguration('unruley');
-    let currentColor = config.get('backgroundColor', '#ff0000');
-    let opacity = config.get('backgroundColorOpacity', 0.1);
+    let currentColor = config.get('rulerColor', '#ff0000');
+    let opacity = config.get('rulerColorOpacity', 0.1);
 
     if (isHexColor(currentColor)) {
         currentColor = hexToRgba(currentColor, opacity);
@@ -96,8 +129,6 @@ function applyDecorations(editor) {
     }
 
     const maxLineLength = getEffectiveMaxLineLength();
-
-    console.log(`Applying decorations with background color: ${currentColor} and max line length: ${maxLineLength}`);
 
     if (decorationType) {
         decorationType.dispose();
@@ -180,5 +211,13 @@ function deactivate() {}
 
 module.exports = {
     activate,
-    deactivate
+    deactivate,
+    applyDecorationsToActiveEditor,
+    updateSettings,
+    updateEditorRulers,
+    hexToRgba,
+    rgbToRgba,
+    isHexColor,
+    isRgbColor,
+    getEffectiveMaxLineLength
 };

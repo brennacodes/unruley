@@ -1,13 +1,15 @@
 {
-	"compilerOptions": {
-		"module": "Node16",
-		"target": "ES2022",
-		"checkJs": false,  /* Typecheck .js files. */
-		"lib": [
-			"ES2022"
-		]
-	},
-	"exclude": [
-		"node_modules"
-	]
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "checkJs": false,
+    "allowJs": true,
+    "outDir": "./dist"
+  },
+  "include": [
+    "extension.js"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

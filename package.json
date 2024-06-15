@@ -1,57 +1,102 @@
 {
   "name": "unruley",
   "displayName": "unruley",
-  "description": "Visualize unruley ruler offenses with ease.",
+  "description": "Visualize unruly ruler offenses with ease.",
   "version": "0.0.1",
   "publisher": "brennacodes",
+  "type": "commonjs",
+  "repository": {
+    "type": "git",
+    "url": "https://www.github.com/brennacodes/unruley"
+  },
+  "icon": "images/icon.png",
   "engines": {
     "vscode": "^1.89.0"
   },
   "categories": [
-    "Other"
+    "Linters"
   ],
-  "main": "./extension.js",
+  "keywords": [
+    "line",
+    "code",
+    "ruler",
+    "length",
+    "unruley",
+    "highlight",
+    "visualization"
+  ],
   "activationEvents": [
     "*"
   ],
+  "main": "./extension.js",
   "contributes": {
     "commands": [
       {
-        "command": "unruley.changeBackgroundColor",
-        "title": "Change Background Color Beyond Ruler"
+        "command": "unruley.ruler",
+        "title": "Change Ruler Length"
+      },
+      {
+        "command": "extension.unruleyCommand",
+        "title": "Unruley"
+      },
+      {
+        "command": "unruley.rulerColor",
+        "title": "Change Ruler Color"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "extension.unruleyCommand",
+        "key": "cmd+shift+p",
+        "mac": "cmd+shift+p",
+        "when": "editorTextFocus"
+      },
+      {
+        "command": "extension.unruleyCommand",
+        "key": "ctrl+shift+p",
+        "when": "editorTextFocus"
       }
     ],
     "configuration": {
+      "type": "object",
       "properties": {
-        "unruley.backgroundColor": {
+        "unruley.rulerColor": {
           "type": "string",
           "default": "#ff0000",
-          "description": "The background color to apply"
+          "description": "The background color to apply. You can use hex or rgb values.",
+          "format": "color",
+          "scope": "window"
         },
-        "unruley.maxLineLength": {
+        "unruley.ruler": {
           "type": "number",
           "default": 80,
-          "description": "The maximum line length"
+          "description": "The maximum line length",
+          "scope": "window"
         },
-        "unruley.backgroundColorOpacity": {
+        "unruley.rulerColorOpacity": {
           "type": "number",
           "default": 0.1,
-          "description": "The opacity to apply to the background color"
+          "description": "The opacity to apply to the background color",
+          "scope": "window"
         }
       }
     }
   },
   "scripts": {
-    "vscode:prepublish": "npm run compile",
-    "compile": "node ./node_modules/vscode/bin/install"
+    "vscode:prepublish": "npm install",
+    "test": "node ./test/run.test.js"
   },
   "devDependencies": {
-    "@types/vscode": "^1.89.0",
-    "@types/mocha": "^10.0.6",
     "@types/node": "18.x",
-    "eslint": "^8.57.0",
-    "typescript": "^5.4.5",
+    "@types/vscode": "^1.x",
     "@vscode/test-cli": "^0.0.9",
-    "@vscode/test-electron": "^2.3.9"
+    "@vscode/test-electron": "^2.3.9",
+    "@types/mocha": "^10.x",
+    "chai": "^5.1.1",
+    "eslint": "^8.57.0"
+  },
+  "dependencies": {
+    "glob": "^10.4.1",
+    "mocha": "^10.4.0"
   }
 }
