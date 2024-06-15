@@ -35,13 +35,13 @@ The background color is automatically applied to lines that exceed the maximum l
 
 ## Commands
 
-- `unruley.changeBackgroundColor`: Apply the background color and maximum line length settings to the active editor.
+- `unruley`: Open the settings for this extension.
 
 ## Configuration
 
-- `unruley.backgroundColor`: Set the background color. Accepts hex (e.g., `#RRGGBB` or `#RGB`) or rgb (e.g., `rgb(255, 0, 0)`) color formats. Default is `#ff0000`.
-- `unruley.maxLineLength`: Set the maximum line length. Default is `80`.
-- `unruley.backgroundColorOpacity`: Set the opacity of the background color. Accepts a number between `0` (completely transparent) and `1` (completely opaque). Default is `0.1`.
+- `unruley.ruler`: Set the maximum line length. Default is `80`.
+- `unruley.rulerColor`: Set the background color. Accepts hex (e.g., `#RRGGBB` or `#RGB`) or rgb (e.g., `rgb(255, 0, 0)`) color formats. Default is `#ff0000`.
+- `unruley.rulerColorOpacity`: Set the opacity of the background color. Accepts a number between `0` (completely transparent) and `1` (completely opaque). Default is `0.1`.
 
 ## Support
 

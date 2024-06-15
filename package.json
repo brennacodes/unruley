@@ -2,7 +2,7 @@
   "name": "unruley",
   "displayName": "unruley",
   "description": "Visualize unruly ruler offenses with ease.",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "publisher": "brennacodes",
   "type": "commonjs",
   "repository": {
