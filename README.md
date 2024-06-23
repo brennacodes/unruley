@@ -19,6 +19,9 @@ The background color is automatically applied to lines that exceed the maximum l
   <figcaption align = "center"><b>Unruley In Action</b></figcaption>
 </figure>
 
+## Future Features
+
+- Allow users to set and update settings per workspace.
 
 ## Usage
 

@@ -2,7 +2,7 @@
   "name": "unruley",
   "displayName": "unruley",
   "description": "Visualize unruly ruler offenses with ease.",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "publisher": "brennacodes",
   "type": "commonjs",
   "repository": {
@@ -42,19 +42,6 @@
       {
         "command": "unruley.rulerColor",
         "title": "Change Ruler Color"
-      }
-    ],
-    "keybindings": [
-      {
-        "command": "extension.unruleyCommand",
-        "key": "cmd+shift+p",
-        "mac": "cmd+shift+p",
-        "when": "editorTextFocus"
-      },
-      {
-        "command": "extension.unruleyCommand",
-        "key": "ctrl+shift+p",
-        "when": "editorTextFocus"
       }
     ],
     "configuration": {

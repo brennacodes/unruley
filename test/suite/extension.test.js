@@ -1,5 +1,5 @@
 const vscode = require('vscode');
-const myExtension = require('../../extension');
+const myExtension = require('../../src/extension');
 let assert;
 (async () => {
   const chai = await import('chai');
